@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When freedom becomes a thing of the past</title>
+    <link rel="icon" href="23logo.png">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="">
+    <meta property="og:url" content="https://github.com/thomastaoli/article-23/">
+    <meta property="og:image" content="https://github.com/thomastaoli/article-23/headerbg.png">
+    <meta property="og:description" content="What is Hong Kong's Article 23, and what it means for city's future">
+    <meta property="article:author" content="Thomas Li">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-size: 20px;
+            font-family: 'Nunito', sans-serif;
+            /* Nunito as a fallback for Avenir */
+            text-rendering: optimizeLegibility;
+            background: #1C2550;
+            /* Dark blue background */
+            color: whitesmoke
+        }
+
+        .byline {
+            font-size: 1.1rem;
+            line-height: 0.75;
+            margin-top: 1.5rem;
+            font-weight: 500;
+        }
+
+        .date {
+            font-size: 0.85rem;
+            line-height: 1;
+            margin-top: 10px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content {
+            max-width: 640px;
+            margin: auto;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            padding: 3em 0;
+        }
+
+        a {
+            color: #f05349;
+        }
+
+        .footer {
+            background: #f4f4f4;
+            text-align: center;
+            font-size: 0.8em;
+            margin-top: 4em;
+            padding: 4em 0;
+        }
+
+        figure {
+            margin: 0;
+            padding-bottom: 1.2em;
+        }
+
+        figcaption {
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 0.5em;
+            color: #666;
+        }
+
+        h1 {
+            font-family: 'DM Serif Text', serif;
+            font-weight: bold;
+            font-size: 3em;
+            line-height: 1;
+            color: white
+        }
+
+        h2 {
+            font-family: 'DM Serif Text', serif;
+            font-weight: bold;
+            font-size: 1.3em;
+            line-height: 1;
+            color: white
+        }
+
+        .hr-lines {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            font-family: 'DM Serif Text', serif;
+            font-size: 35px;
+            font-weight: 600
+        }
+
+        .subhead {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+
+        iframe,
+        img,
+        video {
+            max-width: 100%;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 0;
+            padding-bottom: 1.2em;
+        }
+
+        ul {
+            margin: 0;
+            padding-bottom: 1em;
+            line-height: 1.6;
+        }
+
+        iframe {
+            padding-bottom: 1.2em;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #fff880;
+        }
+
+        /* margin on mobile */
+        @media (max-width: 640px) {
+            body {
+                font-size: 18px;
+            }
+
+            .content {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+
+            .header-container {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            /* Adjust the height based on the width while maintaining aspect ratio */
+        }
+
+        .portrait {
+            float: center;
+            /* Position the portrait to the left */
+            width: 80px;
+            /* Adjust the width as needed */
+            height: 80px;
+            /* Adjust the height as needed */
+            border-radius: 50%;
+            /* Make the portrait round */
+            margin-right: 15px;
+            /* Add some space between the portrait and the text */
+            object-fit: cover;
+            /* Ensure the image covers the area without distortion */
+        }
+    </style>
+    <link href="scrolly-styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/3.2.0/scrollama.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
+</head>
+
+<body>
+    <div class="language-selection">
+        <a href="en.html">EN</a> | <a href="zh.html">華</a>
+    </div>
+    <div class="header-container">
+        <div class="header" style="text-align: center">
+            <h1>When freedom becomes a thing of the past</h1>
+            <p class="subhead">What is Hong Kong's Article 23, and what it means for city's future</p>
+        </div>
+    </div>
+
+    <div style="text-align: center">
+        <img src="header.png" style="width:40%;text-align: center">
+    </div>
+
+    <div style="text-align: center">
+        <p class="byline">By <a href="thomastaoli.github.io">Thomas Li</a> | <a href="https://www.call4hk.us/">Support
+                Hong Kong's Freedom</a></p>
+        <p class="date">March 31, 2024</p>
+    </div>
+
+
+    <div class="content">
+        <p>If you don’t like John Lee – oops, don’t say it – you might be sentenced to years of imprisonment.</p>
+        <p>Last Saturday on March 23, a new national security law – known as Article 23 – took effect in Hong Kong, a
+            city once known for its bustling streets but also vibrant civil liberties. </p>
+        <p>The legislative process unfolded rapidly, concluding in just 50 days as testament to the changing political
+            climate. City’s Chief Executive John Lee (yes, the guy you shouldn’t criticize without scruples) said the
+            law “accomplished a historic mission, living up to the trust placed in us by the Central Authorities.”</p>
+        <p>The law, introduced to complement Beijing’s 2020 mandate, criminalizes a range of political offenses,
+            including treason and insurrection, with penalties extending to life imprisonment. With much uncertainty and
+            ambiguity, the law makes city’s political opposition and civil society now find themselves in a weakened
+            state, overshadowed by the expansive reach.</p>
+    </div>
+
+    <h2 class="hr-lines" style="margin-top: 30px; margin-bottom: 10px;"> - What's inside Article 23 - </h2>
+    <p class="subhead">The devil is in the details</p>
+
+    <div class="content">
+        <p>The legislation of Article 23 is a complement of the Beijing-imposed national security law enacted in 2020,
+            and
+            fill in other gaps in the city’s legal framework on national security.</p>
+        <p>The law itself, with a combination of both mainland Chinese and colonial-era British legal traditions, is
+            divided into five main offenses: treason, insurrection, state secrets and espionage, sabotage, and external
+            interference. </p>
+        </p>
+    </div>
+
+    <section id="new-scrolly-images" class="scrolly-container">
+        <div class="sticky-thing">
+            <img src="treason.png">
+        </div>
+        <div class="steps-container">
+            <div class="step" id="new-step1">
+                <div>
+                    <p><strong>Treason</strong></p>
+                    <p>This includes joining external armed forces at war with China and unlawful drilling. Exemptions
+                        will be made for non-Chinese citizens.</p>
+                </div>
+            </div>
+            <div class="step" id="new-step2">
+                <div>
+                    <p><strong>Insurrection</strong></p>
+                    <p>While inherited the seditious intent from the colonial-era Crimes Ordinance, the new law also
+                        criminalizes the act of
+                        inciting, assisting, or participating in an insurrection.
+                    </p>
+                </div>
+            </div>
+            <div class="step" id="new-step3">
+                <div>
+                    <p><strong>State Secrets and Espionage</strong></p>
+                    <p>This includes the theft, spying, or unauthorized disclosure of state secrets. The law also
+                        criminalizes the act of obtaining state secrets and passing them to foreign entities.
+                    </p>
+                </div>
+            </div>
+            <div class="step" id="new-step4">
+                <div>
+                    <p><strong>Sabotage</strong></p>
+                    <p>The two new offenses target the act of damaging infrastructure and activities related to
+                        computer. Doxxing of police officers, for example, is now a national security offense.
+                    </p>
+                </div>
+            </div>
+            <div class="step" id="new-step5">
+                <div>
+                    <p><strong>External Interference</strong></p>
+                    <p> The law criminalizes the act of receiving fund, direction or other forms of support from foreign
+                        entities to undermine national security. This includes the act of lobbying foreign governments
+                        to impose sanctions on China.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="content">
+        <p>The most worrying part of the new law, as <a
+                href="https://www.amnesty.org/en/latest/news/2024/03/what-is-hong-kongs-article-23-law-10-things-you-need-to-know/">Amnesty
+                International</a>
+            pointed out, is the direct copy of its
+            definition of “national security” from mainland China, where it is a vague concept covering “major interests
+            of the state” – which means basically everything.</p>
+        <p>In addition, the law also introduces the definition of “state secrets”, which is extremely broad and can
+            relate to any economic, social, technological or scientific developments – even when they have never been
+            officially classified as secrets. This is very similar to the notorious “catch-all” provisions contained in
+            section 2 of the now-replaced Official Secrets Act in the UK.</p>
+        <p>Even though the bill contains a defence for disclosing state secrets based on public interest, this still
+            makes society worried about the chilling effect on whistle-blowers.</p>
+        <p>Moreover, under the new law, the Chief Executive has the absolute authority to certify whether any material
+            involves state secrets. So again - pretty much anything could be considered a “state secret”.</p>
+    </div>
+
+    <h2 class="hr-lines" style="margin-top: 50px; margin-bottom: 10px;"> - The Timeline - </h2>
+    <p class="subhead" style="margin-bottom: 30px;">It took a quarter-century for the bill to be enacted</p>
+
+    <div class="content">
+        <p>The enactment of laws under Article 23 has been a contentious issue, which has taken over 20 years and
+            witnessed the shift of city’s political landscape. </p>
+        <p>When Hong Kong was handed over to China in 1997, the Basic Law was established to govern the city, promising
+            a high degree of autonomy under the principle of "one country, two systems." </p>
+        <p>While Article 23 of the Basic Law mandates Hong Kong to enact its own national security laws, the central
+            government took a rather mild attitudes towards the legislation.</p>
+        <p>But everything went wrong in 2002.</p>
+    </div>
+
+    <br>
+
+    <section id="scrolly-images" class="scrolly-container">
+        <div class="sticky-thing">
+            <img src="donkey.jpg">
+        </div>
+        <div class="steps-container">
+            <div class="step" id="step1">
+                <div>
+                    <p><strong>September 2002</strong></p>
+                    <p>The Tung Chee Hwa government began public consultation on
+                        Article 23 legislation. The then Secretary for Security, Regina Ip, took a tough stance on
+                        public dissatisfaction and repeatedly made frivolous remarks.</p>
+                </div>
+            </div>
+            <div class="step" id="step2">
+                <div>
+                    <p>"Do you think taxi drivers, restaurant waiters or McDonald's workers will go over the bill clause
+                        by clause with me?"</p>
+                    <p>"Hitler was also elected through a democratic election, but he killed over seven million
+                        Jewish people. Is universal suffrage really able to ensure human rights?"</p>
+                </div>
+            </div>
+            <div class="step" id="step3">
+                <div>
+                    <p><strong>July 2003</strong></p>
+                    <p>With the extreme dissatisfaction from city's residents with the
+                        Tung Chee Hwa government after Hong Kong's handover, more than 500,000 people took to the
+                        streets to protest against the legislation on the anniversary of handover.</p>
+                </div>
+            </div>
+            <div class="step" id="step4">
+                <div>
+                    <p>Parts of the pro-Beijing camp caved in the face of public opinion. The Liberal Party led by James
+                        Tien requested that the second reading be postponed. The bill lost the support of the majority
+                        of legislators.</p>
+                </div>
+            </div>
+            <div class="step" id="step5">
+                <div>
+                    <p><strong>May 2011</strong></p>
+                    <p>Rita Fan, member of the Standing Committee of the National People's Congress, stated that the
+                        Chief
+                        Executive of Hong Kong bears the responsibility and necessity to finish the legislation of
+                        Article
+                        23. She also mentioned that Article 23 is not a "dire threat", and city's residents should not
+                        be overly concerned.</p>
+                </div>
+            </div>
+            <div class="step" id="step6">
+                <div>
+                    <p><strong>June 2019</strong></p>
+                    <p>The Anti-extradition Bill Protest breaks out. Hong Kong has plunged into its most serious
+                        political crisis since the handover. The then government led by Carrie Lam
+                        refused to withdraw the legislation, and the social movement gradually turned into riots.</p>
+                </div>
+            </div>
+            <div class="step" id="step7">
+                <div>
+                    <p><strong>May 2020</strong></p>
+                    <p>The Hong Kong National Security Law was enacted by the
+                        Standing Committee of the National People's Congress. Drafted without public consultation
+                        and diverging from Hong Kong's common law traditions, it has led to numerous arrests and
+                        convictions
+                        under its provisions soon afterward.</p>
+                </div>
+            </div>
+            <div class="step" id="step8">
+                <div>
+                    <p><strong>Jan. 30, 2024</strong></p>
+                    <p>The new Chief Executive John Lee announced the public consultation for the legislation of Article
+                        23. He clarified that cases related
+                        to Article 23 would be tried in Hong Kong, ensuring that those arrested would not be sent to the
+                        mainland for trial.</p>
+                </div>
+            </div>
+            <div class="step" id="step9">
+                <div>
+                    <p><strong>March 8, 2024</strong></p>
+                    <p>The bill draft was officially gazetted and underwent its first and second readings in the
+                        Legislative Council.</p>
+                </div>
+            </div>
+            <div class="step" id="step10">
+                <div>
+                    <p><strong>March 19, 2024</strong></p>
+                    <p><strong>4:10 p.m.</strong> The second reading of the final draft was passed without opposition
+                    </p>
+                    <p><strong>7 p.m.</strong> The third reading was unanimously approved. The ordinance
+                        was officially gazetted and came into effect on March 23.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <div class="content">
+        <p>And yes, Regina Ip who failed in 2003, is still there. The now senior legislator of Hong Kong told CNN that
+            the legislation is "a task that has been outstanding for 27 years".</p>
+        <p>"We're not bowing to the pressure of China", said Ip. "it's our legal, constituinal and moral
+            responsibility to safegurd national security."</p>
+        <p>While the Hong Kong government is trying to persuade investors that the city is still going to be the
+            financial hub, harms have already been done. The Department of State released a statement on February 28
+            expressing its concern over the undermining of the “One Country, Two Systems” framework.</p>
+        <p>"We are particularly concerned by Hong Kong authorities' proposal to adopt broad and vague definitions of
+            state secrets and external interference," said the spokesperson. "That could be used to eliminate dissent
+            through the fear of arrest and detention."</p>
+    </div>
+
+    <h2 class="hr-lines" style="margin-top: 30px; margin-bottom: 10px;"> - The Heritage - </h2>
+    <p class="subhead" style="margin-bottom: 30px;">How Article 23 alerted Hong Kong's no-longer-existing civil society
+    </p>
+
+    <div class="content">
+        <p>The June Fourth massacre in 1989 made many Hong Kong residents disappointed with the CCP and the future of
+            Hong Kong. After the handover in 1997, marches were organised annually on July 1 – the handover anniversary
+            – by the Hong Kong Alliance in Support of Patriotic Democratic Movements of China (支聯會), a pan-Chinese civil
+            rights organisation that demands the Chinese government to redress the student movement in 1989 and
+            accelerate democratisation.</p>
+        <p>However, the Article 23 legislation attempt in 2003 made Hong Kong people realize that the city’s freedom is
+            at immediate jeopardy. While the public was worried civil rights and liberties would be adversely affected,
+            a more local-oriented organisation, the Civil Human Rights Front (民陣), was formed by grassroots and
+            pro-democracy politicians.</p>
+        <p>Since 2003, the annual march has been an important event for Hong Kong’s civil society to demand for
+            democracy and universal suffrage. The number of people participating in the march and the topics discussed
+            also directly reflect citizens’ perceptions of the government’s performance.</p>
+    </div>
+    <section id="bar-chart-scrollytelling" class="scrolly-container">
+        <div class="sticky-thing">
+            <p class="hr-lines" style="margin-bottom: 10px;">How many people marched on 1 July?</p>
+            <svg viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+            <script src="barChart.js"></script>
+        </div>
+        <div class="steps-container">
+            <div class="step" id="bar-step1" data-year="2003,2004">
+                <p>According to the Civil Human Rights Front, more than 500 thousand people attended the protest in 2003
+                    and 2004, of which the headline theme is to stop Article 23 legislation and strive for universal
+                    suffrage in 2008 Chief Excecutive election.</p>
+            </div>
+            <div class="step" id="bar-step2" data-year="2011,2012">
+                <p>The 2011 and 2012 parades were attended by 200 and 400 thousand people respectively. In addition to
+                    fighting for universal suffrage, city's residents have also expressed concerns about the wide
+                    disparity between rich and poor and the narrowing of freedom of speech since the handover.</p>
+            </div>
+            <div class="step" id="bar-step3" data-year="2014">
+                <p>The number of marchers in 2014 once again reached 500 thousand, showcasing people's
+                    dissatisfaction with the central government's tightening control and repeated delays in implementing
+                    universal suffrage. Two months later, the Umbrella Movement broke out and ultimately failed, and
+                    plans to implement universal suffrage in 2017 were declared aborted.</p>
+            </div>
+            <div class="step" id="bar-step4" data-year="2019">
+                <p>Affected by the anti-extradition bill movement, more than 550 thousand people took to the streets on
+                    July 1, 2019. The march ended violently, with protestors storming and occupying the Legislative
+                    Council. Many of them ended up in jail on riot charges.</p>
+            </div>
+            <div class="step" id="bar-step4" data-year="2020">
+                <p>The National Security Law came into effect in 2020. For the first time, the police did not approve
+                    the 1 July march and arrested more than 370 demonstrators that day.</p>
+            </div>
+        </div>
+    </section>
+    <div class="content">
+        <p>"The legislation of Article 23 showed Beijing's changing attitude on Hong Kong and the 'One Country, Two
+            Systems'," said Johnny Lau, a senior news commentor. "The 1 July march in 2003 greatly alarmed Beijing,
+            leading mainland Chinese authorities to send a significant number of people southward to
+            investigate. They attributed Hong Kongers' opposition to Article 23 to a lack of 'emotional
+            reunification'."</p>
+        <p>Press freedom has always been an advantage that differentiates Hong Kong from the mainland and is also the
+            pillar of civil society that Hong Kong people were once proud of. However, Article 23 means it's
+            in jeopardy.</p>
+        <p>Radio Free Asia is known as the first outlet to end its Hong Kong business after the bill was passed.</p>
+        <p>"Their broad and vague definitions make it hard for journalists to make sound judgement on what could
+            constitute a threat to national security," said Hong Kong Journalists Association. "This could create a
+            chilling effect, deterring the press from
+            doing relevant reporting due to legal concerns."</p>
+    </div>
+    <div style="text-align: center">
+        <img src="skyline.png" style="width:50%; text-align: center">
+    </div>
+    <div class="content" style="text-align: center;">
+        <a href="https://thomastaoli.github.io/portfolio.html">Back to my portfolio page</a>
+    </div>
+    <br>
+    <script>
+        (() => {
+            const scroller = scrollama()
+
+            scroller
+                .setup({
+                    parent: document.querySelector("#scrolly-images"),
+                    step: ".step",
+                    offset: 0.6,
+                    debug: false,
+                })
+                .onStepEnter(function ({ element, index, direction }) {
+                    // Dispatch the event as before
+                    const event = new CustomEvent("stepin", { detail: { direction: direction } })
+                    element.dispatchEvent(event)
+                })
+                .onStepExit(function ({ element, index, direction }) {
+                    // Dispatch the event as before
+                    const event = new CustomEvent("stepout", { detail: { direction: direction } })
+                    if (direction === "up" && element.previousElementSibling) {
+                        const event = new CustomEvent("stepin", { detail: { direction: direction } })
+                        element.previousElementSibling.dispatchEvent(event)
+                    }
+                })
+
+            window.addEventListener("resize", scroller.resize)
+        })()
+
+        /*
+        This part sets up your actions. In this case, it's changing the image in the scrolly container.
+        */
+        function changeImage(stepElement, imageUrl) {
+            const imageElement = d3.select(stepElement.closest(".scrolly-container")).select("img");
+            // Fade out the current image
+            imageElement.transition().duration(500).style('opacity', 0).on('end', () => {
+                // Once the image is faded out, change the src
+                imageElement.attr("src", imageUrl);
+                // Fade the new image in
+                imageElement.transition().duration(500).style('opacity', 1);
+            });
+        }
+
+        /*
+        This part sets up your actions. In this case, it's changing the image in the scrolly container.
+        */
+        d3.select("#step1").on('stepin', (e) => {
+            changeImage(e.target, "donkey.jpg");
+        });
+
+        d3.select("#step3").on('stepin', (e) => {
+            changeImage(e.target, "2003.jpg");
+        });
+
+        d3.select("#step5").on('stepin', (e) => {
+            changeImage(e.target, "rita.jpeg");
+        });
+
+        d3.select("#step6").on('stepin', (e) => {
+            changeImage(e.target, "2019-1.jpg");
+        });
+
+        d3.select("#step7").on('stepin', (e) => {
+            changeImage(e.target, "nsl.jpg");
+        });
+        d3.select("#step8").on('stepin', (e) => {
+            changeImage(e.target, "john.jpeg");
+        });
+        d3.select("#step9").on('stepin', (e) => {
+            changeImage(e.target, "public.jpg");
+        });
+        d3.select("#step10").on('stepin', (e) => {
+            changeImage(e.target, "2024.jpg");
+        });
+    </script>
+    <script>
+        (() => {
+            const scroller = scrollama()
+
+            scroller
+                .setup({
+                    parent: document.querySelector("#new-scrolly-images"),
+                    step: ".step",
+                    offset: 0.6,
+                    debug: false,
+                })
+                .onStepEnter(function ({ element, index, direction }) {
+                    // Dispatch the event as before
+                    const event = new CustomEvent("stepin", { detail: { direction: direction } })
+                    element.dispatchEvent(event)
+                })
+                .onStepExit(function ({ element, index, direction }) {
+                    // Dispatch the event as before
+                    const event = new CustomEvent("stepout", { detail: { direction: direction } })
+                    if (direction === "up" && element.previousElementSibling) {
+                        const event = new CustomEvent("stepin", { detail: { direction: direction } })
+                        element.previousElementSibling.dispatchEvent(event)
+                    }
+                })
+
+            window.addEventListener("resize", scroller.resize)
+        })()
+
+        /*
+        This part sets up your actions. In this case, it's changing the image in the scrolly container.
+        */
+        function changeImage(stepElement, imageUrl) {
+            const imageElement = d3.select(stepElement.closest(".scrolly-container")).select("img");
+            // Fade out the current image
+            imageElement.transition().duration(500).style('opacity', 0).on('end', () => {
+                // Once the image is faded out, change the src
+                imageElement.attr("src", imageUrl);
+                // Fade the new image in
+                imageElement.transition().duration(500).style('opacity', 1);
+            });
+        }
+
+        d3.select("#new-step1").on('stepin', (e) => {
+            changeImage(e.target, "treason.png");
+        });
+
+        d3.select("#new-step2").on('stepin', (e) => {
+            changeImage(e.target, "insurrection.png");
+        });
+
+        d3.select("#new-step3").on('stepin', (e) => {
+            changeImage(e.target, "secret.png");
+        });
+
+        d3.select("#new-step4").on('stepin', (e) => {
+            changeImage(e.target, "sabotage.png");
+        });
+
+        d3.select("#new-step5").on('stepin', (e) => {
+            changeImage(e.target, "interference.png");
+        });
+    </script>
+    <script>
+        (() => {
+            const barChartScroller = scrollama();
+
+            barChartScroller
+                .setup({
+                    parent: '#bar-chart-scrollytelling',
+                    step: '.step',
+                    offset: 0.6,
+                    debug: false,
+                })
+                .onStepEnter(({ element }) => {
+                    highlightYear(element.dataset.year); // Pass multiple years as a comma-separated string
+                    // Call showAnnotation function if you have it defined
+                })
+                .onStepExit(({ element }) => {
+                    resetHighlight(); // Ensure this function resets the bars to their default state
+                    // Call removeAnnotation function if you have it defined
+                });
+
+            window.addEventListener('resize', barChartScroller.resize);
+            function highlightYear(years) {
+                const yearArray = years.split(','); // Split the years by comma
+                svg.selectAll("rect")
+                    .attr("fill", d => yearArray.includes(d.Year.toString()) ? "#FFA500" : "#69b3a2"); // Change color based on condition
+            }
+            function resetHighlight() {
+                svg.selectAll("rect").attr("fill", "#69b3a2"); // Reset color to default for all bars
+            }
+        })();
+    </script>
+    <style>
+        /* Change this to adjust the padding between steps */
+        .step {
+            margin-bottom: 70vh;
+        }
+    </style>
+</body>
+
+</html>
